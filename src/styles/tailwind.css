@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	:root {
+		text-size-adjust: 100%;
+		-webkit-text-size-adjust: 100%;
+	}
+}
+
 @layer utilities {
 	.preview-fixed-200 { width: 200px; height: 200px; }
 
@@ -57,4 +64,6 @@
 	.bg-standard-21 { background-color: #DC143C; }
 	.bg-standard-22 { background-color: #006400; }
 	.bg-standard-23 { background-color: #B8860B; }
+
+	.progress-bar { accent-color: #10b981; }
 }

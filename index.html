@@ -1167,7 +1167,7 @@
                                     
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
-                                            <label htmlFor="iconSizeSelect" className="block text-sm font-medium mb-2">📏 Tamaño del Icono</label>
+                                            <label id="iconSizeLabel" htmlFor="iconSizeSelect" className="block text-sm font-medium mb-2">📏 Tamaño del Icono</label>
                                             <select
                                                 id="iconSizeSelect"
                                                 value={iconSize}
@@ -1175,6 +1175,7 @@
                                                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-transparent"
                                                 title="Selecciona el tamaño del icono"
                                                 aria-label="Tamaño del icono"
+                                                aria-labelledby="iconSizeLabel"
                                             >
                                                 {iconSizes.map((size) => (
                                                     <option key={size.size} value={size.size}>
@@ -1306,18 +1307,16 @@
                                         <div className="p-4 bg-gray-50 rounded-xl">
                                             {selectedModernTemplate ? (
                                                 <div
-                                                    className="preview-canvas max-w-full h-auto border border-gray-200 rounded-lg shadow-sm"
-                                                    style={{ width: '200px', height: '200px' }}
+                                                    className="preview-canvas max-w-full h-auto border border-gray-200 rounded-lg shadow-sm w-[200px] h-[200px]"
                                                     dangerouslySetInnerHTML={{ __html: generateSVG(200) }}
                                                 />
                                             ) : (
                                                 <canvas
                                                     ref={canvasRef}
-                                                    className="preview-canvas max-w-full h-auto border border-gray-200 rounded-lg shadow-sm"
-                                                    style={{ width: '200px', height: '200px' }}
+                                                    className="preview-canvas max-w-full h-auto border border-gray-200 rounded-lg shadow-sm w-[200px] h-[200px]"
+                                                    
                                                 />
                                             )}
-                                        </div>
                                     </div>
 
                                     {/* Botones de acción */}
@@ -1349,12 +1348,14 @@
                                             )}
                                         </button>
                                         {isExporting && (
-                                            <div className="progress-bar">
-                                                <div 
-                                                    className="progress-fill"
-                                                    style={{ width: `${exportProgress}%` }}
-                                                ></div>
-                                            </div>
+                                            <progress
+                                                className="w-full h-2 progress-bar"
+                                                value={exportProgress}
+                                                max="100"
+                                                aria-label="Progreso de exportación"
+                                            >
+                                                {exportProgress}%
+                                            </progress>
                                         )}
                                         <button
                                             onClick={downloadFavicon}
