@@ -12,16 +12,14 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-        };
-    </script>
-    <link rel="apple-touch-icon" sizes="180x180" href="icon-192x192.png">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#e9d5ec">
+                                                <div
+                                                    className="preview-canvas max-w-full h-auto border border-gray-200 rounded-lg shadow-sm preview-fixed-200"
+                                                    dangerouslySetInnerHTML={{ __html: generateSVG(200) }}
+                                                />
     <style>
         body {
             margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-            transition: background 0.3s ease, color 0.3s ease;
+                                                    className="preview-canvas max-w-full h-auto border border-gray-200 rounded-lg shadow-sm preview-fixed-200"
         }
 
         /* Modo oscuro mejorado */
@@ -1052,17 +1050,19 @@
 
                                     {/* Grid de colores */}
                                     <div className="grid grid-cols-10 gap-2 mb-4">
-                                        {(colorPalette === 'pastel' ? pastelColors : standardColors).map((color) => (
-                                            <button
-                                                key={color}
-                                                className={`w-8 h-8 rounded-lg border-2 transition-all hover:scale-110 ${
-                                                    selectedColor === color ? 'border-gray-400 ring-2 ring-gray-300' : 'border-gray-200'
-                                                }`}
-                                                style={{ backgroundColor: color }}
-                                                onClick={() => setSelectedColor(color)}
-                                                title={color}
-                                            />
-                                        ))}
+                                        {(colorPalette === 'pastel' ? pastelColors : standardColors).map((color, index) => {
+                                            const paletteClass = colorPalette === 'pastel' ? `bg-pastel-${index}` : `bg-standard-${index}`;
+                                            return (
+                                                <button
+                                                    key={color}
+                                                    className={`w-8 h-8 rounded-lg border-2 transition-all hover:scale-110 ${paletteClass} ${
+                                                        selectedColor === color ? 'border-gray-400 ring-2 ring-gray-300' : 'border-gray-200'
+                                                    }`}
+                                                    onClick={() => setSelectedColor(color)}
+                                                    title={color}
+                                                />
+                                            );
+                                        })}
                                     </div>
 
                                     {/* Gradiente */}
@@ -1079,29 +1079,34 @@
                                         
                                         {gradientEnabled && (
                                             <div className="grid grid-cols-10 gap-1">
-                                                {(colorPalette === 'pastel' ? pastelColors : standardColors).map((color) => (
-                                                    <button
-                                                        key={color}
-                                                        className={`w-6 h-6 rounded border ${
-                                                            secondaryColor === color ? 'border-gray-400 ring-1' : 'border-gray-200'
-                                                        }`}
-                                                        style={{ backgroundColor: color }}
-                                                        onClick={() => setSecondaryColor(color)}
-                                                        title={`Segundo color: ${color}`}
-                                                    />
-                                                ))}
+                                                {(colorPalette === 'pastel' ? pastelColors : standardColors).map((color, index) => {
+                                                    const paletteClass = colorPalette === 'pastel' ? `bg-pastel-${index}` : `bg-standard-${index}`;
+                                                    return (
+                                                        <button
+                                                            key={color}
+                                                            className={`w-6 h-6 rounded border ${paletteClass} ${
+                                                                secondaryColor === color ? 'border-gray-400 ring-1' : 'border-gray-200'
+                                                            }`}
+                                                            onClick={() => setSecondaryColor(color)}
+                                                            title={`Segundo color: ${color}`}
+                                                        />
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                     </div>
 
                                     {/* Subida de imagen */}
                                     <div className="mt-4">
-                                        <label className="block text-sm font-medium mb-2">📁 Subir imagen</label>
+                                        <label htmlFor="uploadImage" className="block text-sm font-medium mb-2">📁 Subir imagen</label>
                                         <input
+                                            id="uploadImage"
                                             type="file"
                                             accept="image/*"
                                             onChange={handleImageUpload}
                                             className="w-full text-sm"
+                                            title="Subir imagen para el icono"
+                                            aria-label="Subir imagen para el icono"
                                         />
                                         {imageError && (
                                             <p className="mt-2 text-xs text-red-500">{imageError}</p>
@@ -1162,11 +1167,14 @@
                                     
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">📏 Tamaño del Icono</label>
+                                            <label htmlFor="iconSizeSelect" className="block text-sm font-medium mb-2">📏 Tamaño del Icono</label>
                                             <select
+                                                id="iconSizeSelect"
                                                 value={iconSize}
                                                 onChange={(e) => setIconSize(Number(e.target.value))}
                                                 className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                                                title="Selecciona el tamaño del icono"
+                                                aria-label="Tamaño del icono"
                                             >
                                                 {iconSizes.map((size) => (
                                                     <option key={size.size} value={size.size}>
@@ -1177,18 +1185,21 @@
                                         </div>
                                         
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">🎨 Color de Fondo</label>
+                                            <label htmlFor="backgroundColorInput" className="block text-sm font-medium mb-2">🎨 Color de Fondo</label>
                                             <input
+                                                id="backgroundColorInput"
                                                 type="color"
                                                 value={backgroundColor}
                                                 onChange={(e) => setBackgroundColor(e.target.value)}
                                                 className="w-full h-12 border rounded-lg cursor-pointer"
+                                                title="Selecciona el color de fondo"
+                                                aria-label="Selecciona el color de fondo"
                                             />
                                         </div>
                                         
                                         <div className="md:col-span-2">
                                             <div className="flex items-center justify-between mb-2">
-                                                <label className="block text-sm font-medium">✏️ Texto del Icono</label>
+                                                <label htmlFor="iconTextInput" className="block text-sm font-medium">✏️ Texto del Icono</label>
                                                 <button
                                                     onClick={() => setShowSymbols(!showSymbols)}
                                                     className="px-3 py-1 text-xs bg-pink-100 text-pink-700 rounded-lg hover:bg-pink-200 transition-colors"
@@ -1197,12 +1208,15 @@
                                                 </button>
                                             </div>
                                             <input
+                                                id="iconTextInput"
                                                 type="text"
                                                 value={iconText}
                                                 onChange={(e) => setIconText(e.target.value)}
                                                 placeholder="Ej: A, 🚀, etc."
                                                 maxLength="3"
-                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus:border-transparent"
+                                                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-300 focus-border-transparent"
+                                                title="Texto del icono"
+                                                aria-label="Texto del icono"
                                             />
                                             
                                             {/* Panel de símbolos */}
@@ -1243,16 +1257,19 @@
                                         </div>
                                         
                                         <div>
-                                            <label className="block text-sm font-medium mb-2">
+                                            <label htmlFor="fontSizeRange" className="block text-sm font-medium mb-2">
                                                 📝 Tamaño del Texto: {fontSize}px
                                             </label>
                                             <input
+                                                id="fontSizeRange"
                                                 type="range"
                                                 min="50"
                                                 max="400"
                                                 value={fontSize}
                                                 onChange={(e) => setFontSize(Number(e.target.value))}
                                                 className="w-full"
+                                                title="Ajusta el tamaño del texto"
+                                                aria-label="Ajusta el tamaño del texto"
                                             />
                                         </div>
                                     </div>
