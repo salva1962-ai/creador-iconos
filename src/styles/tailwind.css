@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+	.preview-fixed-200 { width: 200px; height: 200px; }
+
+	/* Paleta pastel */
+	.bg-pastel-0 { background-color: #FFB3BA; }
+	.bg-pastel-1 { background-color: #FFDFBA; }
+	.bg-pastel-2 { background-color: #FFFFBA; }
+	.bg-pastel-3 { background-color: #BAFFC9; }
+	.bg-pastel-4 { background-color: #BAE1FF; }
+	.bg-pastel-5 { background-color: #D4BAFF; }
+	.bg-pastel-6 { background-color: #FFB3D9; }
+	.bg-pastel-7 { background-color: #FFC9B3; }
+	.bg-pastel-8 { background-color: #B3FFB3; }
+	.bg-pastel-9 { background-color: #B3E5FF; }
+	.bg-pastel-10 { background-color: #E1B3FF; }
+	.bg-pastel-11 { background-color: #FFE1B3; }
+	.bg-pastel-12 { background-color: #C9FFB3; }
+	.bg-pastel-13 { background-color: #B3D9FF; }
+	.bg-pastel-14 { background-color: #F0B3FF; }
+	.bg-pastel-15 { background-color: #FFD1DC; }
+	.bg-pastel-16 { background-color: #FFEAA7; }
+	.bg-pastel-17 { background-color: #DDA0DD; }
+	.bg-pastel-18 { background-color: #98FB98; }
+	.bg-pastel-19 { background-color: #87CEEB; }
+	.bg-pastel-20 { background-color: #F5DEB3; }
+	.bg-pastel-21 { background-color: #FFE4E1; }
+	.bg-pastel-22 { background-color: #E0FFFF; }
+	.bg-pastel-23 { background-color: #F0F8FF; }
+	.bg-pastel-24 { background-color: #FFF8DC; }
+
+	/* Paleta estándar */
+	.bg-standard-0 { background-color: #FF0000; }
+	.bg-standard-1 { background-color: #00FF00; }
+	.bg-standard-2 { background-color: #0000FF; }
+	.bg-standard-3 { background-color: #FFFF00; }
+	.bg-standard-4 { background-color: #FF00FF; }
+	.bg-standard-5 { background-color: #00FFFF; }
+	.bg-standard-6 { background-color: #000000; }
+	.bg-standard-7 { background-color: #FFFFFF; }
+	.bg-standard-8 { background-color: #808080; }
+	.bg-standard-9 { background-color: #800000; }
+	.bg-standard-10 { background-color: #008000; }
+	.bg-standard-11 { background-color: #000080; }
+	.bg-standard-12 { background-color: #808000; }
+	.bg-standard-13 { background-color: #800080; }
+	.bg-standard-14 { background-color: #008080; }
+	.bg-standard-15 { background-color: #C0C0C0; }
+	.bg-standard-16 { background-color: #FFA500; }
+	.bg-standard-17 { background-color: #A52A2A; }
+	.bg-standard-18 { background-color: #8A2BE2; }
+	.bg-standard-19 { background-color: #5F9EA0; }
+	.bg-standard-20 { background-color: #D2691E; }
+	.bg-standard-21 { background-color: #DC143C; }
+	.bg-standard-22 { background-color: #006400; }
+	.bg-standard-23 { background-color: #B8860B; }
+}
