@@ -84,6 +84,15 @@ const UI_ICONS = {
   }))
 };
 const ADVANCED_TEMPLATES = [{
+  id: "classic",
+  name: "Clásico Solid",
+  description: "Fondo de color plano estándar para iconos minimalistas",
+  preview: (color1, color2) => `
+            <svg viewBox="0 0 100 100" class="w-full h-full">
+                <rect x="15" y="15" width="70" height="70" rx="20" fill="${color1}" />
+            </svg>
+        `
+}, {
   id: "mesh-gradient",
   name: "Mesh Gradient",
   description: "Gradiente artístico multidimensional",
@@ -217,7 +226,8 @@ const PRESETS = [{
   primary: "#8b5cf6",
   secondary: "#ec4899",
   noise: 5,
-  gloss: false
+  gloss: false,
+  pattern: "none"
 }, {
   name: "Glass Apple",
   template: "inner-glow",
@@ -225,7 +235,8 @@ const PRESETS = [{
   primary: "#ffffff",
   secondary: "#f8fafc",
   noise: 0,
-  glass: true
+  glass: true,
+  pattern: "none"
 }, {
   name: "Gold 3D",
   template: "isometric-3d",
@@ -233,7 +244,8 @@ const PRESETS = [{
   primary: "#fbbf24",
   secondary: "#d97706",
   gloss: true,
-  noise: 0
+  noise: 0,
+  pattern: "dots"
 }, {
   name: "Retro Mesh",
   template: "mesh-gradient",
@@ -241,7 +253,8 @@ const PRESETS = [{
   primary: "#f472b6",
   secondary: "#60a5fa",
   noise: 12,
-  glass: false
+  glass: false,
+  pattern: "grid"
 }];
 const MOCKUP_TEMPLATES = [{
   id: "none",
@@ -395,30 +408,22 @@ const IconStudio = () => {
     const shape = SHAPES.find(s => s.id === selectedShape) || SHAPES[0];
     const patternData = PATTERNS.find(p => p.id === selectedPattern);
     let content = "";
-    const noiseFilter = noiseIntensity > 0 ? `
-            <filter id="noise">
-                <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-                <feComponentTransfer>
-                    <feFuncA type="linear" slope="${noiseIntensity / 100}" />
-                </feComponentTransfer>
-                <feComposite operator="in" in2="SourceGraphic" />
-            </filter>
-        ` : "";
+    let templateDefs = "";
     if (selectedTemplate === "mesh-gradient") {
+      templateDefs = `
+                <radialGradient id="mesh1" cx="20%" cy="20%" r="70%">
+                    <stop offset="0%" stop-color="${primaryColor}" />
+                    <stop offset="100%" stop-color="${primaryColor}00" />
+                </radialGradient>
+                <radialGradient id="mesh2" cx="80%" cy="80%" r="70%">
+                    <stop offset="0%" stop-color="${secondaryColor}" />
+                    <stop offset="100%" stop-color="${secondaryColor}00" />
+                </radialGradient>
+                <filter id="mesh-blur" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+                </filter>
+            `;
       content = `
-                <defs>
-                    <radialGradient id="mesh1" cx="20%" cy="20%" r="70%">
-                        <stop offset="0%" stop-color="${primaryColor}" />
-                        <stop offset="100%" stop-color="${primaryColor}00" />
-                    </radialGradient>
-                    <radialGradient id="mesh2" cx="80%" cy="80%" r="70%">
-                        <stop offset="0%" stop-color="${secondaryColor}" />
-                        <stop offset="100%" stop-color="${secondaryColor}00" />
-                    </radialGradient>
-                    <filter id="mesh-blur" x="-20%" y="-20%" width="140%" height="140%">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
-                    </filter>
-                </defs>
                 <rect width="100" height="100" fill="${primaryColor}44" />
                 <g filter="url(#mesh-blur)">
                     <rect width="100" height="100" fill="url(#mesh1)" />
@@ -426,46 +431,47 @@ const IconStudio = () => {
                 </g>
             `;
     } else if (selectedTemplate === "isometric-3d") {
+      templateDefs = `
+                <linearGradient id="top-face" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff44" />
+                    <stop offset="100%" stop-color="#ffffff11" />
+                </linearGradient>
+            `;
       content = `
-                <defs>
-                    <linearGradient id="top-face" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stop-color="#ffffff44" />
-                        <stop offset="100%" stop-color="#ffffff11" />
-                    </linearGradient>
-                </defs>
                 <path d="M50 15 L85 32.5 L85 67.5 L50 85 L15 67.5 L15 32.5 Z" fill="${primaryColor}" />
                 <path d="M50 15 L85 32.5 L50 50 L15 32.5 Z" fill="url(#top-face)" />
                 <path d="M15 32.5 L50 50 L50 85 L15 67.5 Z" fill="#00000022" />
                 <path d="M85 32.5 L85 67.5 L50 85 L50 50 Z" fill="#00000011" />
             `;
     } else if (selectedTemplate === "inner-glow") {
-      content = `
-                <defs>
-                    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feFlood flood-color="white" result="flood" />
-                        <feComposite in="flood" in2="SourceGraphic" operator="out" result="mask" />
-                        <feGaussianBlur in="mask" stdDeviation="4" result="blurred" />
-                        <feComposite in="blurred" in2="SourceGraphic" operator="atop" />
-                    </filter>
-                    <linearGradient id="base-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="${primaryColor}" />
-                        <stop offset="100%" stop-color="${secondaryColor}" />
-                    </linearGradient>
-                </defs>
-                <rect x="10" y="10" width="80" height="80" rx="25" fill="url(#base-grad)" filter="url(#glow)" />
+      templateDefs = `
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feFlood flood-color="white" result="flood" />
+                    <feComposite in="flood" in2="SourceGraphic" operator="out" result="mask" />
+                    <feGaussianBlur in="mask" stdDeviation="4" result="blurred" />
+                    <feComposite in="blurred" in2="SourceGraphic" operator="atop" />
+                </filter>
+                <linearGradient id="base-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="${primaryColor}" />
+                    <stop offset="100%" stop-color="${secondaryColor}" />
+                </linearGradient>
             `;
+      content = `<rect x="10" y="10" width="80" height="80" rx="25" fill="url(#base-grad)" filter="url(#glow)" />`;
     } else if (selectedTemplate === "neon-outer") {
+      templateDefs = `
+                <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                    <feBlend in="SourceGraphic" in2="blur" mode="screen" />
+                </filter>
+            `;
       content = `
-                <defs>
-                    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-                        <feBlend in="SourceGraphic" in2="blur" mode="screen" />
-                    </filter>
-                </defs>
                 <rect width="100" height="100" fill="#020617" />
                 <path d="${shape.path}" fill="none" stroke="${primaryColor}" stroke-width="3" filter="url(#neon-glow)" />
                 <path d="${shape.path}" fill="${primaryColor}11" />
             `;
+    } else {
+      // Default Classic / Solid
+      content = `<path d="${shape.path}" fill="${primaryColor}" />`;
     }
     const textContent = iconText ? `
             <text x="${50 + textOffsetX}" y="${52 + textOffsetY}" 
@@ -490,6 +496,14 @@ const IconStudio = () => {
     const imageContent = uploadedImage ? `
             <image href="${uploadedImage}" x="25" y="25" width="50" height="50" preserveAspectRatio="xMidYMid slice" clip-path="url(#shape-clip)" />
         ` : "";
+    const glassShineDef = glassOverlay ? `
+            <linearGradient id="glass-shine" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff88" />
+                <stop offset="45%" stop-color="#ffffff00" />
+                <stop offset="55%" stop-color="#ffffff00" />
+                <stop offset="100%" stop-color="#ffffff44" />
+            </linearGradient>
+        ` : "";
     return `
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="${size}" height="${size}">
                 <defs>
@@ -500,7 +514,17 @@ const IconStudio = () => {
                         <feDropShadow dx="0" dy="${shadowIntensity / 10}" stdDeviation="${shadowIntensity / 5}" flood-opacity="0.3"/>
                     </filter>
                     ${patternData.path ? patternData.path : ""}
-                    ${noiseFilter}
+                    ${noiseIntensity > 0 ? `
+                        <filter id="noise">
+                            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+                            <feComponentTransfer>
+                                <feFuncA type="linear" slope="${noiseIntensity / 100}" />
+                            </feComponentTransfer>
+                            <feComposite operator="in" in2="SourceGraphic" />
+                        </filter>
+                    ` : ""}
+                    ${templateDefs}
+                    ${glassShineDef}
                 </defs>
                 <g filter="url(#outer-shadow)">
                     <g clip-path="url(#shape-clip)">
@@ -511,14 +535,6 @@ const IconStudio = () => {
                         ${glassOverlay ? `
                             <rect width="100" height="100" fill="white" opacity="0.1" />
                             <rect width="100" height="100" fill="url(#glass-shine)" opacity="0.2" />
-                            <defs>
-                                <linearGradient id="glass-shine" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#ffffff88" />
-                                    <stop offset="45%" stop-color="#ffffff00" />
-                                    <stop offset="55%" stop-color="#ffffff00" />
-                                    <stop offset="100%" stop-color="#ffffff44" />
-                                </linearGradient>
-                            </defs>
                         ` : ''}
                         ${glossyEffect ? `
                             <path d="M 0,0 Q 50,25 100,0 L 100,0 L 0,0 Z" fill="white" opacity="0.2" />
@@ -536,7 +552,7 @@ const IconStudio = () => {
                 ${secondaryContent}
             </svg>
         `.trim();
-  }, [selectedTemplate, selectedShape, primaryColor, secondaryColor, iconText, fontSize, textOffsetX, textOffsetY, secondarySymbol, secondarySize, secOffsetX, secOffsetY, shadowIntensity, noiseIntensity, glassOverlay, glossyEffect, longShadow, selectedFont, uploadedImage]);
+  }, [selectedTemplate, selectedShape, selectedPattern, primaryColor, secondaryColor, iconText, fontSize, textOffsetX, textOffsetY, secondarySymbol, secondarySize, secOffsetX, secOffsetY, shadowIntensity, noiseIntensity, glassOverlay, glossyEffect, longShadow, selectedFont, uploadedImage]);
   const renderPreview = useMemo(() => {
     return generateSVGString(400);
   }, [generateSVGString]);
@@ -766,6 +782,7 @@ const IconStudio = () => {
       setNoiseIntensity(p.noise || 0);
       setGlassOverlay(p.glass || false);
       setGlossyEffect(p.gloss || false);
+      setSelectedPattern(p.pattern || "none");
     },
     className: "p-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-[10px] font-black uppercase text-slate-500 hover:border-pink-500 hover:text-pink-500 transition-all text-center"
   }, p.name))), /*#__PURE__*/React.createElement("label", {
@@ -1200,14 +1217,14 @@ const IconStudio = () => {
   }, /*#__PURE__*/React.createElement("div", {
     className: `absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${glassOverlay ? "left-5" : "left-1"}`
   }))), /*#__PURE__*/React.createElement("button", {
-    onClick: () => setCheckerboard(!checkerboard),
-    className: `w-full p-4 rounded-3xl flex items-center justify-between transition-all ${checkerboard ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900" : "bg-slate-100 dark:bg-slate-800 text-slate-600"}`
+    onClick: () => setPreviewBackground(previewBackground === 'checker' ? 'light' : 'checker'),
+    className: `w-full p-4 rounded-3xl flex items-center justify-between transition-all ${previewBackground === 'checker' ? "bg-slate-900 dark:bg-white text-white dark:text-slate-900" : "bg-slate-100 dark:bg-slate-800 text-slate-600"}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "text-sm font-bold"
   }, "Fondo Checkerboard"), /*#__PURE__*/React.createElement("div", {
-    className: `w-10 h-6 rounded-full relative transition-colors ${checkerboard ? "bg-emerald-500" : "bg-slate-300 dark:bg-slate-600"}`
+    className: `w-10 h-6 rounded-full relative transition-colors ${previewBackground === 'checker' ? "bg-emerald-500" : "bg-slate-300 dark:bg-slate-600"}`
   }, /*#__PURE__*/React.createElement("div", {
-    className: `absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${checkerboard ? "left-5" : "left-1"}`
+    className: `absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${previewBackground === 'checker' ? "left-5" : "left-1"}`
   }))))), activeSection === "Export" && /*#__PURE__*/React.createElement("div", {
     className: "space-y-6 animate-in slide-in-from-left-4 duration-300"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("label", {
