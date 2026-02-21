@@ -355,6 +355,8 @@ const IconStudio = () => {
   const [glossyEffect, setGlossyEffect] = useState(false);
   const [longShadow, setLongShadow] = useState(false);
   const [showSafeGuide, setShowSafeGuide] = useState(false);
+  const [textColor, setTextColor] = useState("#ffffff");
+  const [secondaryTextColor, setSecondaryTextColor] = useState("#ffffff");
   const [uploadedImage, setUploadedImage] = useState(null);
 
   // Initial Appearance
@@ -394,6 +396,8 @@ const IconStudio = () => {
     setFontSize(Math.floor(Math.random() * 30) + 30);
     setTextOffsetX(0);
     setTextOffsetY(0);
+    setTextColor("#ffffff");
+    setSecondaryTextColor("#ffffff");
     if (Math.random() > 0.6) {
       setSecondarySymbol(symbols[Math.floor(Math.random() * symbols.length)]);
       setSecondarySize(Math.floor(Math.random() * 20) + 15);
@@ -480,7 +484,7 @@ const IconStudio = () => {
                 font-family="${selectedFont}" 
                 font-weight="900" 
                 font-size="${fontSize}" 
-                fill="white"
+                fill="${textColor}"
                 style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2))"
             >${iconText}</text>
         ` : "";
@@ -489,7 +493,7 @@ const IconStudio = () => {
                 text-anchor="middle" 
                 dominant-baseline="middle" 
                 font-size="${secondarySize}" 
-                fill="white"
+                fill="${secondaryTextColor}"
                 style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2))"
             >${secondarySymbol}</text>
         ` : "";
@@ -552,7 +556,7 @@ const IconStudio = () => {
                 ${secondaryContent}
             </svg>
         `.trim();
-  }, [selectedTemplate, selectedShape, selectedPattern, primaryColor, secondaryColor, iconText, fontSize, textOffsetX, textOffsetY, secondarySymbol, secondarySize, secOffsetX, secOffsetY, shadowIntensity, noiseIntensity, glassOverlay, glossyEffect, longShadow, selectedFont, uploadedImage]);
+  }, [selectedTemplate, selectedShape, selectedPattern, primaryColor, secondaryColor, iconText, fontSize, textOffsetX, textOffsetY, secondarySymbol, secondarySize, secOffsetX, secOffsetY, shadowIntensity, noiseIntensity, glassOverlay, glossyEffect, longShadow, selectedFont, uploadedImage, textColor, secondaryTextColor]);
   const renderPreview = useMemo(() => {
     return generateSVGString(400);
   }, [generateSVGString]);
@@ -926,7 +930,14 @@ const IconStudio = () => {
   }, PRO_FONTS.map(f => /*#__PURE__*/React.createElement("option", {
     key: f.id,
     value: f.family
-  }, f.name)))), /*#__PURE__*/React.createElement("div", {
+  }, f.name))), /*#__PURE__*/React.createElement("input", {
+    type: "color",
+    value: textColor,
+    onChange: e => setTextColor(e.target.value),
+    className: "w-12 h-12 rounded-2xl border-0 p-1 bg-slate-50 dark:bg-slate-900 cursor-pointer shadow-sm hover:scale-105 transition-transform",
+    title: "Color del texto principal",
+    "aria-label": "Color del texto principal"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "p-4 bg-slate-50 dark:bg-slate-900 rounded-[32px] mb-6 space-y-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex justify-between items-center"
@@ -1002,6 +1013,13 @@ const IconStudio = () => {
     onChange: e => setSecondarySymbol(e.target.value),
     placeholder: "Emoji extra...",
     "aria-label": "S\xEDmbolo secundario"
+  }), /*#__PURE__*/React.createElement("input", {
+    type: "color",
+    value: secondaryTextColor,
+    onChange: e => setSecondaryTextColor(e.target.value),
+    className: "w-12 h-12 rounded-2xl border-0 p-1 bg-white/10 cursor-pointer shadow-sm hover:scale-105 transition-transform",
+    title: "Color del s\xEDmbolo secundario",
+    "aria-label": "Color del s\xEDmbolo secundario"
   }), /*#__PURE__*/React.createElement("div", {
     className: "w-20 bg-white/10 rounded-2xl flex flex-col items-center justify-center"
   }, /*#__PURE__*/React.createElement("span", {
