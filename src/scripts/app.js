@@ -814,14 +814,17 @@ const IconStudio = () => {
     className: `w-full aspect-square rounded-full border-2 transition-transform hover:scale-125 ${primaryColor === c ? "border-slate-900 dark:border-white scale-110" : "border-transparent"}`,
     style: {
       backgroundColor: c
-    }
+    },
+    title: `Seleccionar color ${c}`
   })), /*#__PURE__*/React.createElement("div", {
     className: "relative w-full aspect-square rounded-full overflow-hidden border-2 border-slate-100 dark:border-slate-800"
   }, /*#__PURE__*/React.createElement("input", {
     type: "color",
     value: primaryColor,
     onChange: e => setPrimaryColor(e.target.value),
-    className: "absolute inset-[-10px] w-[150%] h-[150%] cursor-pointer"
+    className: "absolute inset-[-10px] w-[150%] h-[150%] cursor-pointer",
+    title: "Selector de color personalizado",
+    "aria-label": "Color primario personalizado"
   }))), /*#__PURE__*/React.createElement("label", {
     className: "text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 block"
   }, "Gradients Reales (Nivel Pro)"), /*#__PURE__*/React.createElement("div", {
@@ -870,7 +873,9 @@ const IconStudio = () => {
     type: "color",
     value: secondaryColor,
     onChange: e => setSecondaryColor(e.target.value),
-    className: "w-8 h-8 rounded-lg overflow-hidden cursor-pointer"
+    className: "w-8 h-8 rounded-lg overflow-hidden cursor-pointer",
+    title: "Color secundario",
+    "aria-label": "Color secundario"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pt-2 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2"
   }, /*#__PURE__*/React.createElement("button", {
@@ -909,11 +914,15 @@ const IconStudio = () => {
     className: "flex-1 bg-slate-50 dark:bg-slate-900 border-0 rounded-2xl px-4 py-3 text-lg font-bold focus:ring-2 ring-pink-500 outline-none transition-all dark:text-white",
     value: iconText,
     onChange: e => setIconText(e.target.value),
-    placeholder: "Emoji o Texto..."
+    placeholder: "Emoji o Texto...",
+    title: "Contenido del icono",
+    "aria-label": "Contenido del icono"
   }), /*#__PURE__*/React.createElement("select", {
     value: selectedFont,
     onChange: e => setSelectedFont(e.target.value),
-    className: "bg-slate-50 dark:bg-slate-900 border-0 rounded-2xl px-3 font-bold text-xs dark:text-white outline-none"
+    className: "bg-slate-50 dark:bg-slate-900 border-0 rounded-2xl px-3 font-bold text-xs dark:text-white outline-none",
+    title: "Seleccionar fuente",
+    "aria-label": "Seleccionar fuente"
   }, PRO_FONTS.map(f => /*#__PURE__*/React.createElement("option", {
     key: f.id,
     value: f.family
@@ -931,7 +940,9 @@ const IconStudio = () => {
     max: "80",
     value: fontSize,
     onChange: e => setFontSize(Number(e.target.value)),
-    className: "w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-pink-500"
+    className: "w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-pink-500",
+    "aria-label": "Tama\xF1o de fuente",
+    title: "Tama\xF1o de fuente"
   }), /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-2 gap-4"
   }, /*#__PURE__*/React.createElement("div", {
@@ -948,7 +959,9 @@ const IconStudio = () => {
     max: "40",
     value: textOffsetX,
     onChange: e => setTextOffsetX(Number(e.target.value)),
-    className: "w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+    className: "w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500",
+    "aria-label": "Posici\xF3n horizontal del texto",
+    title: "Posici\xF3n horizontal"
   })), /*#__PURE__*/React.createElement("div", {
     className: "space-y-2"
   }, /*#__PURE__*/React.createElement("div", {
@@ -963,7 +976,9 @@ const IconStudio = () => {
     max: "40",
     value: textOffsetY,
     onChange: e => setTextOffsetY(Number(e.target.value)),
-    className: "w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+    className: "w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500",
+    "aria-label": "Posici\xF3n vertical del texto",
+    title: "Posici\xF3n vertical"
   }))), /*#__PURE__*/React.createElement("button", {
     onClick: () => {
       setTextOffsetX(0);
@@ -985,7 +1000,8 @@ const IconStudio = () => {
     className: "flex-1 bg-white/10 border-0 rounded-2xl px-4 py-3 text-lg font-bold placeholder:text-white/40 outline-none focus:ring-2 ring-white/50 transition-all text-white",
     value: secondarySymbol,
     onChange: e => setSecondarySymbol(e.target.value),
-    placeholder: "Emoji extra..."
+    placeholder: "Emoji extra...",
+    "aria-label": "S\xEDmbolo secundario"
   }), /*#__PURE__*/React.createElement("div", {
     className: "w-20 bg-white/10 rounded-2xl flex flex-col items-center justify-center"
   }, /*#__PURE__*/React.createElement("span", {
@@ -994,7 +1010,8 @@ const IconStudio = () => {
     type: "number",
     value: secondarySize,
     onChange: e => setSecondarySize(Number(e.target.value)),
-    className: "bg-transparent text-center font-bold outline-none w-full"
+    className: "bg-transparent text-center font-bold outline-none w-full",
+    "aria-label": "Tama\xF1o del s\xEDmbolo secundario"
   }))), /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-4 gap-2 mb-4"
   }, [{
@@ -1032,14 +1049,16 @@ const IconStudio = () => {
     max: "50",
     value: secOffsetX,
     onChange: e => setSecOffsetX(Number(e.target.value)),
-    className: "flex-1 accent-white"
+    className: "flex-1 accent-white",
+    "aria-label": "Ajuste fino X s\xEDmbolo secundario"
   }), /*#__PURE__*/React.createElement("input", {
     type: "range",
     min: "-50",
     max: "50",
     value: secOffsetY,
     onChange: e => setSecOffsetY(Number(e.target.value)),
-    className: "flex-1 accent-white"
+    className: "flex-1 accent-white",
+    "aria-label": "Ajuste fino Y s\xEDmbolo secundario"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "flex items-center gap-2 mb-4 p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl"
   }, /*#__PURE__*/React.createElement("button", {
@@ -1085,7 +1104,9 @@ const IconStudio = () => {
     className: "text-xs font-bold text-indigo-600 dark:text-indigo-400"
   }, "Explorar Archivos")), uploadedImage && /*#__PURE__*/React.createElement("button", {
     onClick: () => setUploadedImage(null),
-    className: "absolute top-2 right-2 text-red-500 hover:text-red-600 p-1"
+    className: "absolute top-2 right-2 text-red-500 hover:text-red-600 p-1",
+    title: "Eliminar imagen subida",
+    "aria-label": "Eliminar imagen subida"
   }, /*#__PURE__*/React.createElement("svg", {
     className: "w-5 h-5",
     fill: "currentColor",
@@ -1124,7 +1145,8 @@ const IconStudio = () => {
     max: "100",
     value: noiseIntensity,
     onChange: e => setNoiseIntensity(Number(e.target.value)),
-    className: "w-full accent-emerald-500"
+    className: "w-full accent-emerald-500",
+    "aria-label": "Intensidad de ruido"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "flex justify-between items-center mb-4"
   }, /*#__PURE__*/React.createElement("label", {
@@ -1137,7 +1159,8 @@ const IconStudio = () => {
     max: "80",
     value: fontSize,
     onChange: e => setFontSize(Number(e.target.value)),
-    className: "w-full accent-pink-500"
+    className: "w-full accent-pink-500",
+    "aria-label": "Tama\xF1o de fuente efectos"
   })), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "flex justify-between items-center mb-4"
   }, /*#__PURE__*/React.createElement("label", {
@@ -1150,7 +1173,8 @@ const IconStudio = () => {
     max: "50",
     value: shadowIntensity,
     onChange: e => setShadowIntensity(Number(e.target.value)),
-    className: "w-full accent-violet-500"
+    className: "w-full accent-violet-500",
+    "aria-label": "Intensidad de sombra"
   })), /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-1 gap-3 pt-4 border-t border-slate-200 dark:border-slate-800"
   }, /*#__PURE__*/React.createElement("button", {

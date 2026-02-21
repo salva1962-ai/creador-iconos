@@ -699,10 +699,11 @@ const IconStudio = () => {
                                             onClick={() => setPrimaryColor(c)}
                                             className={`w-full aspect-square rounded-full border-2 transition-transform hover:scale-125 ${primaryColor === c ? "border-slate-900 dark:border-white scale-110" : "border-transparent"}`}
                                             style={{ backgroundColor: c }}
+                                            title={`Seleccionar color ${c}`}
                                         />
                                     ))}
                                     <div className="relative w-full aspect-square rounded-full overflow-hidden border-2 border-slate-100 dark:border-slate-800">
-                                        <input type="color" value={primaryColor} onChange={e => setPrimaryColor(e.target.value)} className="absolute inset-[-10px] w-[150%] h-[150%] cursor-pointer" />
+                                        <input type="color" value={primaryColor} onChange={e => setPrimaryColor(e.target.value)} className="absolute inset-[-10px] w-[150%] h-[150%] cursor-pointer" title="Selector de color personalizado" aria-label="Color primario personalizado" />
                                     </div>
                                 </div>
 
@@ -738,7 +739,7 @@ const IconStudio = () => {
                                 <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-3xl space-y-4">
                                     <div className="flex items-center justify-between">
                                         <span className="text-[10px] font-bold uppercase dark:text-slate-400">Color Secundario</span>
-                                        <input type="color" value={secondaryColor} onChange={e => setSecondaryColor(e.target.value)} className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer" />
+                                        <input type="color" value={secondaryColor} onChange={e => setSecondaryColor(e.target.value)} className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer" title="Color secundario" aria-label="Color secundario" />
                                     </div>
                                     <div className="pt-2 border-t border-slate-200 dark:border-slate-800 grid grid-cols-2 gap-2">
                                         <button onClick={() => setSecondaryColor(primaryColor)} className="py-2 rounded-xl bg-white dark:bg-slate-800 text-[9px] font-bold text-slate-500 uppercase">Monocromo</button>
@@ -782,11 +783,15 @@ const IconStudio = () => {
                                         value={iconText}
                                         onChange={e => setIconText(e.target.value)}
                                         placeholder="Emoji o Texto..."
+                                        title="Contenido del icono"
+                                        aria-label="Contenido del icono"
                                     />
                                     <select 
                                         value={selectedFont} 
                                         onChange={e => setSelectedFont(e.target.value)}
                                         className="bg-slate-50 dark:bg-slate-900 border-0 rounded-2xl px-3 font-bold text-xs dark:text-white outline-none"
+                                        title="Seleccionar fuente"
+                                        aria-label="Seleccionar fuente"
                                     >
                                         {PRO_FONTS.map(f => (
                                             <option key={f.id} value={f.family}>{f.name}</option>
@@ -802,6 +807,8 @@ const IconStudio = () => {
                                         type="range" min="10" max="80" value={fontSize} 
                                         onChange={e => setFontSize(Number(e.target.value))}
                                         className="w-full h-1.5 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-pink-500"
+                                        aria-label="Tamaño de fuente"
+                                        title="Tamaño de fuente"
                                     />
                                     
                                     <div className="grid grid-cols-2 gap-4">
@@ -814,6 +821,8 @@ const IconStudio = () => {
                                                 type="range" min="-40" max="40" value={textOffsetX} 
                                                 onChange={e => setTextOffsetX(Number(e.target.value))}
                                                 className="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                aria-label="Posición horizontal del texto"
+                                                title="Posición horizontal"
                                             />
                                         </div>
                                         <div className="space-y-2">
@@ -825,6 +834,8 @@ const IconStudio = () => {
                                                 type="range" min="-40" max="40" value={textOffsetY} 
                                                 onChange={e => setTextOffsetY(Number(e.target.value))}
                                                 className="w-full h-1 bg-slate-200 dark:bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                                                aria-label="Posición vertical del texto"
+                                                title="Posición vertical"
                                             />
                                         </div>
                                     </div>
@@ -851,12 +862,14 @@ const IconStudio = () => {
                                             value={secondarySymbol}
                                             onChange={e => setSecondarySymbol(e.target.value)}
                                             placeholder="Emoji extra..."
+                                            aria-label="Símbolo secundario"
                                         />
                                         <div className="w-20 bg-white/10 rounded-2xl flex flex-col items-center justify-center">
                                             <span className="text-[8px] font-black uppercase opacity-60">Size</span>
                                             <input 
                                                 type="number" value={secondarySize} onChange={e => setSecondarySize(Number(e.target.value))}
                                                 className="bg-transparent text-center font-bold outline-none w-full"
+                                                aria-label="Tamaño del símbolo secundario"
                                             />
                                         </div>
                                     </div>
@@ -883,8 +896,8 @@ const IconStudio = () => {
                                             <span>Ajuste Fino X/Y</span>
                                         </div>
                                         <div className="flex gap-4">
-                                            <input type="range" min="-50" max="50" value={secOffsetX} onChange={e => setSecOffsetX(Number(e.target.value))} className="flex-1 accent-white" />
-                                            <input type="range" min="-50" max="50" value={secOffsetY} onChange={e => setSecOffsetY(Number(e.target.value))} className="flex-1 accent-white" />
+                                            <input type="range" min="-50" max="50" value={secOffsetX} onChange={e => setSecOffsetX(Number(e.target.value))} className="flex-1 accent-white" aria-label="Ajuste fino X símbolo secundario" />
+                                            <input type="range" min="-50" max="50" value={secOffsetY} onChange={e => setSecOffsetY(Number(e.target.value))} className="flex-1 accent-white" aria-label="Ajuste fino Y símbolo secundario" />
                                         </div>
                                     </div>
                                 </div>
@@ -932,7 +945,7 @@ const IconStudio = () => {
                                     <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">Explorar Archivos</span>
                                 </label>
                                 {uploadedImage && (
-                                    <button onClick={() => setUploadedImage(null)} className="absolute top-2 right-2 text-red-500 hover:text-red-600 p-1">
+                                    <button onClick={() => setUploadedImage(null)} className="absolute top-2 right-2 text-red-500 hover:text-red-600 p-1" title="Eliminar imagen subida" aria-label="Eliminar imagen subida">
                                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" /></svg>
                                     </button>
                                 )}
@@ -976,7 +989,7 @@ const IconStudio = () => {
                                     <label className="text-xs font-bold uppercase tracking-wider text-slate-400 leading-none">Ruido / Textura</label>
                                     <span className="text-xs font-black text-slate-900 dark:text-white px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg">{noiseIntensity}%</span>
                                 </div>
-                                <input type="range" min="0" max="100" value={noiseIntensity} onChange={e => setNoiseIntensity(Number(e.target.value))} className="w-full accent-emerald-500" />
+                                <input type="range" min="0" max="100" value={noiseIntensity} onChange={e => setNoiseIntensity(Number(e.target.value))} className="w-full accent-emerald-500" aria-label="Intensidad de ruido" />
                             </div>
 
                             <div>
@@ -984,7 +997,7 @@ const IconStudio = () => {
                                     <label className="text-xs font-bold uppercase tracking-wider text-slate-400 leading-none">Tamaño del Texto</label>
                                     <span className="text-xs font-black text-slate-900 dark:text-white px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg">{fontSize}px</span>
                                 </div>
-                                <input type="range" min="10" max="80" value={fontSize} onChange={e => setFontSize(Number(e.target.value))} className="w-full accent-pink-500" />
+                                <input type="range" min="10" max="80" value={fontSize} onChange={e => setFontSize(Number(e.target.value))} className="w-full accent-pink-500" aria-label="Tamaño de fuente efectos" />
                             </div>
 
                             <div>
@@ -992,7 +1005,7 @@ const IconStudio = () => {
                                     <label className="text-xs font-bold uppercase tracking-wider text-slate-400 leading-none">Intensidad de Sombra</label>
                                     <span className="text-xs font-black text-slate-900 dark:text-white px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg">{shadowIntensity}</span>
                                 </div>
-                                <input type="range" min="0" max="50" value={shadowIntensity} onChange={e => setShadowIntensity(Number(e.target.value))} className="w-full accent-violet-500" />
+                                <input type="range" min="0" max="50" value={shadowIntensity} onChange={e => setShadowIntensity(Number(e.target.value))} className="w-full accent-violet-500" aria-label="Intensidad de sombra" />
                             </div>
 
                             <div className="grid grid-cols-1 gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
