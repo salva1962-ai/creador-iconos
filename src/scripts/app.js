@@ -164,6 +164,12 @@ const ADVANCED_TEMPLATES = [{
 }];
 const PASTEL_COLORS = ["#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#D4BAFF", "#FFB3D9", "#FFC9B3", "#B3FFB3", "#B3E5FF", "#E1B3FF", "#FFE1B3"];
 const PRIMARY_COLORS = ["#EF4444", "#F97316", "#F59E0B", "#10B981", "#3B82F6", "#6366F1", "#8B5CF6", "#EC4899", "#27272a", "#52525b", "#a1a1aa", "#ffffff"];
+const TEXT_COLOR_PALETTES = ["#ffffff", "#000000", "#1a1a1a", "#f3f4f6",
+// Neutros
+"#ef4444", "#fbbf24", "#10b981", "#3b82f6",
+// Primarios
+"#f472b6", "#a855f7", "#2dd4bf", "#f97316" // Vivos
+];
 const GRADIENT_PALETTES = [{
   name: "Sunset",
   colors: ["#FF512F", "#DD2476"]
@@ -396,8 +402,8 @@ const IconStudio = () => {
     setFontSize(Math.floor(Math.random() * 30) + 30);
     setTextOffsetX(0);
     setTextOffsetY(0);
-    setTextColor("#ffffff");
-    setSecondaryTextColor("#ffffff");
+    setTextColor(TEXT_COLOR_PALETTES[Math.floor(Math.random() * TEXT_COLOR_PALETTES.length)]);
+    setSecondaryTextColor(TEXT_COLOR_PALETTES[Math.floor(Math.random() * TEXT_COLOR_PALETTES.length)]);
     if (Math.random() > 0.6) {
       setSecondarySymbol(symbols[Math.floor(Math.random() * symbols.length)]);
       setSecondarySize(Math.floor(Math.random() * 20) + 15);
@@ -938,6 +944,16 @@ const IconStudio = () => {
     title: "Color del texto principal",
     "aria-label": "Color del texto principal"
   })), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-wrap gap-2 mb-6"
+  }, TEXT_COLOR_PALETTES.map(c => /*#__PURE__*/React.createElement("button", {
+    key: c,
+    onClick: () => setTextColor(c),
+    className: `w-7 h-7 rounded-full border-2 transition-all hover:scale-110 ${textColor === c ? "border-pink-500 scale-110 shadow-lg" : "border-transparent"}`,
+    style: {
+      backgroundColor: c
+    },
+    title: `Cambiar a ${c}`
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "p-4 bg-slate-50 dark:bg-slate-900 rounded-[32px] mb-6 space-y-4"
   }, /*#__PURE__*/React.createElement("div", {
     className: "flex justify-between items-center"
@@ -1030,6 +1046,16 @@ const IconStudio = () => {
     onChange: e => setSecondarySize(Number(e.target.value)),
     className: "bg-transparent text-center font-bold outline-none w-full",
     "aria-label": "Tama\xF1o del s\xEDmbolo secundario"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "flex flex-wrap gap-2 mb-6 p-2 bg-white/10 rounded-2xl"
+  }, TEXT_COLOR_PALETTES.map(c => /*#__PURE__*/React.createElement("button", {
+    key: `sec-${c}`,
+    onClick: () => setSecondaryTextColor(c),
+    className: `w-6 h-6 rounded-full border-2 transition-all hover:scale-110 ${secondaryTextColor === c ? "border-white scale-110 shadow-lg" : "border-transparent"}`,
+    style: {
+      backgroundColor: c
+    },
+    title: `Cambiar extra a ${c}`
   }))), /*#__PURE__*/React.createElement("div", {
     className: "grid grid-cols-4 gap-2 mb-4"
   }, [{

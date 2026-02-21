@@ -125,6 +125,12 @@ const PRIMARY_COLORS = [
     "#8B5CF6", "#EC4899", "#27272a", "#52525b", "#a1a1aa", "#ffffff"
 ];
 
+const TEXT_COLOR_PALETTES = [
+    "#ffffff", "#000000", "#1a1a1a", "#f3f4f6", // Neutros
+    "#ef4444", "#fbbf24", "#10b981", "#3b82f6", // Primarios
+    "#f472b6", "#a855f7", "#2dd4bf", "#f97316"  // Vivos
+];
+
 const GRADIENT_PALETTES = [
     { name: "Sunset", colors: ["#FF512F", "#DD2476"] },
     { name: "Ocean", colors: ["#2193B0", "#6DD5ED"] },
@@ -271,8 +277,8 @@ const IconStudio = () => {
         setFontSize(Math.floor(Math.random() * 30) + 30);
         setTextOffsetX(0);
         setTextOffsetY(0);
-        setTextColor("#ffffff");
-        setSecondaryTextColor("#ffffff");
+        setTextColor(TEXT_COLOR_PALETTES[Math.floor(Math.random() * TEXT_COLOR_PALETTES.length)]);
+        setSecondaryTextColor(TEXT_COLOR_PALETTES[Math.floor(Math.random() * TEXT_COLOR_PALETTES.length)]);
         
         if (Math.random() > 0.6) {
             setSecondarySymbol(symbols[Math.floor(Math.random() * symbols.length)]);
@@ -809,6 +815,17 @@ const IconStudio = () => {
                                         aria-label="Color del texto principal"
                                     />
                                 </div>
+                                <div className="flex flex-wrap gap-2 mb-6">
+                                    {TEXT_COLOR_PALETTES.map(c => (
+                                        <button 
+                                            key={c}
+                                            onClick={() => setTextColor(c)}
+                                            className={`w-7 h-7 rounded-full border-2 transition-all hover:scale-110 ${textColor === c ? "border-pink-500 scale-110 shadow-lg" : "border-transparent"}`}
+                                            style={{ backgroundColor: c }}
+                                            title={`Cambiar a ${c}`}
+                                        />
+                                    ))}
+                                </div>
                                 <div className="p-4 bg-slate-50 dark:bg-slate-900 rounded-[32px] mb-6 space-y-4">
                                     <div className="flex justify-between items-center">
                                         <label className="text-[10px] font-black uppercase text-slate-400">Tamaño</label>
@@ -890,6 +907,18 @@ const IconStudio = () => {
                                                 aria-label="Tamaño del símbolo secundario"
                                             />
                                         </div>
+                                    </div>
+
+                                    <div className="flex flex-wrap gap-2 mb-6 p-2 bg-white/10 rounded-2xl">
+                                        {TEXT_COLOR_PALETTES.map(c => (
+                                            <button 
+                                                key={`sec-${c}`}
+                                                onClick={() => setSecondaryTextColor(c)}
+                                                className={`w-6 h-6 rounded-full border-2 transition-all hover:scale-110 ${secondaryTextColor === c ? "border-white scale-110 shadow-lg" : "border-transparent"}`}
+                                                style={{ backgroundColor: c }}
+                                                title={`Cambiar extra a ${c}`}
+                                            />
+                                        ))}
                                     </div>
 
                                     <div className="grid grid-cols-4 gap-2 mb-4">
