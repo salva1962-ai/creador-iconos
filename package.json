@@ -4,7 +4,12 @@
   "description": "",
   "main": "service-worker.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "npx babel src/scripts/app.jsx --out-file src/scripts/app.js",
+    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/output.css --minify",
+    "dev": "concurrently \"npm:dev:js\" \"npm:dev:css\" \"npx serve -l 3000 .\"",
+    "dev:js": "npx babel src/scripts/app.jsx --out-file src/scripts/app.js --watch",
+    "dev:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./src/styles/output.css --watch"
   },
   "repository": {
     "type": "git",
@@ -23,6 +28,7 @@
     "@babel/core": "^7.29.0",
     "@babel/preset-react": "^7.28.5",
     "autoprefixer": "^10.4.24",
+    "concurrently": "^8.2.2",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.19"
   }
